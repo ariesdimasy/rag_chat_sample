@@ -1,0 +1,18 @@
+# 1. Mulai dari Python 3.11 ramping
+FROM python:3.11-slim
+
+# 2. Set folder kerja
+WORKDIR /app
+
+# 3. Salin & install dependency dulu
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# 4. Pre-download model (biar cepat start)
+RUN python -c "..."
+
+# 5. Salin kode aplikasi
+COPY . .
+
+# 6. Jalankan server
+CMD ["uvicorn", "app.main:app","--host", "0.0.0.0"]

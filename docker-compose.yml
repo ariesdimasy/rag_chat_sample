@@ -1,0 +1,21 @@
+services:
+  # Backend: FastAPI
+  backend:
+    build: ./rag_api_project
+    ports:
+      - "8000:8000"
+    environment:
+      - API_KEYS=${API_KEYS}
+
+  # Frontend: Next.js
+  frontend:
+    build:
+      context: ./rag_chat_frontend
+      dockerfile: dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      # bicara ke backend via NAMA service
+      - BACKEND_URL=http://backend:8000
+    depends_on:
+      - backend
